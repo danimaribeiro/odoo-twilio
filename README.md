@@ -49,14 +49,14 @@ TODO
 
 <p align="right"><a href="#top">:arrow_up:</a></p>
 
-### Quick installation
+## Quick installation
 
 TODO
 
 <p align="right"><a href="#top">:arrow_up:</a></p>
 
 
-### Support
+## Support
 
 If you liked this project contribute to further developments and bug fixes
 

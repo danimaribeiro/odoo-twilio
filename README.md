@@ -19,9 +19,8 @@ Twilio Apps
 
 <br>
 
-
-[![Build Status](https://travis-ci.org/Trust-Code/odoo-brasil.svg?branch=11.0)](https://travis-ci.org/Trust-Code/odoo-brasil)
-[![Coverage Status](https://coveralls.io/repos/github/Trust-Code/odoo-brasil/badge.svg?branch=11.0)](https://coveralls.io/github/Trust-Code/odoo-brasil?branch=11.0)
+[![Build Status](https://travis-ci.org/danimaribeiro/odoo-twilio.svg?branch=11.0)](https://travis-ci.org/danimaribeiro/odoo-twilio)
+[![Coverage Status](https://coveralls.io/repos/github/danimaribeiro/odoo-twilio/badge.svg?branch=11.0)](https://coveralls.io/github/danimaribeiro/odoo-twilio?branch=11.0)
 [![Licence](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)
 
 

@@ -2,10 +2,17 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 
+import logging
 from odoo import http
 from odoo.http import request
-from twilio import twiml
-from twilio.util import TwilioCapability
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from twilio import twiml
+    from twilio.util import TwilioCapability
+except ImportError:
+    _logger.error('Cannot import twilio library', exc_info=True)
 
 
 class TwilioController(http.Controller):

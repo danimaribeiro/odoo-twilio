@@ -10,7 +10,8 @@ _logger = logging.getLogger(__name__)
 
 try:
     from twilio import twiml
-    from twilio.util import TwilioCapability
+    from twilio.jwt.access_token import AccessToken
+    from twilio.jwt.access_token.grants import VoiceGrant
 except ImportError:
     _logger.error('Cannot import twilio library', exc_info=True)
 
@@ -76,15 +77,15 @@ class TwilioController(http.Controller):
     @http.route('/twilio/token', type='json')
     def generate_token(self):
         sid_account = request.env.user.company_id.twilio_account_sid
-        token_account = request.env.user.company_id.twilio_auth_token
+        api_key = request.env.user.company_id.twilio_api_key
+        api_secret = request.env.user.company_id.twilio_api_secret
         sid_twiml = request.env.user.company_id.twiml_application
 
-        capability = TwilioCapability(sid_account, token_account)
+        # Create access token with credentials
+        token = AccessToken(sid_account, api_key, api_secret, identity='user')
 
-        # Allow our users to make outgoing calls with Twilio Client
-        capability.allow_client_outgoing(sid_twiml)
-        capability.allow_client_incoming('support_agent')
+        # Create a Voice grant and add to token
+        voice_grant = VoiceGrant(outgoing_application_sid=sid_twiml)
+        token.add_grant(voice_grant)
 
-        # Generate the capability token
-        token = capability.generate()
-        return token
+        return token.to_jwt()

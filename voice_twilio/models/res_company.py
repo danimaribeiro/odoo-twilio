@@ -8,5 +8,6 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     twilio_account_sid = fields.Char(string="SID Twilio")
-    twilio_auth_token = fields.Char(string="Token Twilio")
+    twilio_api_key = fields.Char(string="Twilio API Key")
+    twilio_api_secret = fields.Char(string="Twilio API Secret")
     twilio_number = fields.Char(string="Twilio Número")

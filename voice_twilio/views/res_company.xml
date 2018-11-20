@@ -8,7 +8,8 @@
             <group position="inside">
                 <group name="twilio" string="Twilio">
                     <field name="twilio_account_sid" password="True" />
-                    <field name="twilio_auth_token" password="True" />
+                    <field name="twilio_api_key" />
+                    <field name="twilio_api_secret" password="True" />
                     <field name="twilio_number" />
                 </group>
             </group>

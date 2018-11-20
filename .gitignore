@@ -1,0 +1,7 @@
+*.py[cod]
+*.swp
+*~
+# Remove IDE files
+.idea/
+
+.vscode/

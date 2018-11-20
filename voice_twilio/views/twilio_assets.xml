@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="bpmn_modeler_assets_frontend" name="bpmn_modeler_assets" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                src="//media.twiliocdn.com/sdk/js/client/v1.5/twilio.min.js"></script>
+            <script type="text/javascript"
+                src="/voice_twilio/static/src/js/twilio_app.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

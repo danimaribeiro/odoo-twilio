@@ -2,19 +2,19 @@ Twilio Apps
 ============================================
 
 <p align="center">
-<b><a href="#introducao">Introdução</a></b>
+<b><a href="#introduction">Introduction</a></b>
 |
-<b><a href="#funcionalidades">Funcionalidades</a></b>
+<b><a href="#features">Features</a></b>
 |
 <b><a href="#roadmap">Roadmap</a></b>
 |
-<b><a href="#installation">Instalação</a></b>
+<b><a href="#installation">Installation</a></b>
 |
-<b><a href="#suporte">Suporte</a></b>
+<b><a href="#support">Support</a></b>
 |
-<b><a href="#creditos">Créditos</a></b>
+<b><a href="#credits">Credits</a></b>
 |
-<b><a href="#licenca">Licença</a></b>
+<b><a href="#licence">Licence</a></b>
 </p>
 
 <br>
@@ -24,25 +24,28 @@ Twilio Apps
 [![Licence](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)
 
 
-## Introdução
+## Introduction
 
-Este repositório mantém módulos que integram o Odoo ao Twilio
+This repository contains modules to use Twilio capabilities within Odoo
 
 <p align="right"><a href="#top">:arrow_up:</a></p>
 
-## Funcionalidades
+## Features
 
 * Send SMS from Odoo
 * Calls from Odoo
 
 <p align="right"><a href="#top">:arrow_up:</a></p>
 
+## Roadmap
+
+TODO
 
 <p align="right"><a href="#top">:arrow_up:</a></p>
 
 ## Installation
 
-<a href="https://github.com/Trust-Code/Tutorial-Instalacao">Tutorial de instalação para desenvolvimento</a>
+TODO
 
 <p align="right"><a href="#top">:arrow_up:</a></p>
 
@@ -53,14 +56,9 @@ TODO
 <p align="right"><a href="#top">:arrow_up:</a></p>
 
 
-### Suporte
+### Support
 
-Contribua com o desenvolvimento do projeto.
-
-Seja nosso contribuidor mensal contratando nosso suporte especializado.
-
-Para efetuar doações, use os links abaixo:
-
+If you liked this project contribute to further developments and bug fixes
 
 <p align="right"><a href="#top">:arrow_up:</a></p>
 
@@ -68,11 +66,10 @@ Para efetuar doações, use os links abaixo:
 
 **"If I have seen further, it is by standing on the shoulders of giants"**
 
-
 <p align="right"><a href="#top">:arrow_up:</a></p>
 
 ## Licence
 
-Este projeto é open source sob licença AGPL v3 http://www.gnu.org/licenses/agpl-3.0.html
+This project is open source under AGPL v3 http://www.gnu.org/licenses/agpl-3.0.html
 
 <p align="right"><a href="#top">:arrow_up:</a></p>

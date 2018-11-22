@@ -18,5 +18,6 @@
     'data': [
         'views/res_company.xml',
         'views/twilio.xml',
+        'security/ir.model.access.csv',
     ],
 }

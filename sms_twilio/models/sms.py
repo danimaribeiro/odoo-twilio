@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 try:
     from twilio.rest import Client
 except ImportError:
-    _logger.warning('Cannot import twilio')
+    _logger.error('Cannot import twilio', exc_info=True)
 
 
 class SmsApi(models.AbstractModel):

@@ -1,4 +1,4 @@
-# © 2018 Danimar Ribeiro <danimaibeiro@gmail.com>
+# © 2018 Danimar Ribeiro <danimaribeiro@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
@@ -11,6 +11,7 @@ try:
 except ImportError:
     _logger.error('Cannot import twilio dependencies', exc_info=True)
 
+
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
@@ -18,7 +19,7 @@ class ResCompany(models.Model):
     twilio_auth_token = fields.Char(string="Twilio Auth Token")
     twilio_api_key = fields.Char(string="Twilio API Key")
     twilio_api_secret = fields.Char(string="Twilio API Secret")
-    twilio_number = fields.Char(string="Twilio Número")
+    twilio_number = fields.Char(string="Twilio Number")
 
     balance_account = fields.Char(
         string="Account Balance", compute='_compute_balance_twilio')

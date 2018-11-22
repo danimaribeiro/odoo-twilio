@@ -13,6 +13,7 @@
         'Danimar Ribeiro <danimaribeiro@gmail.com>',
     ],
     'depends': [
+        'twilio_base',
         'sms',
     ],
     'data': [

@@ -19,6 +19,5 @@
     ],
     'data': [
         'views/twilio_assets.xml',
-        'views/res_company.xml',
     ],
 }

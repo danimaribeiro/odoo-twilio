@@ -3,11 +3,12 @@
 
 import logging
 from odoo import api, models
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
 try:
-    from twilio.rest import Client
+    from twilio.base.exceptions import TwilioRestException
 except ImportError:
     _logger.error('Cannot import twilio', exc_info=True)
 
@@ -17,12 +18,13 @@ class SmsApi(models.AbstractModel):
 
     @api.model
     def _send_sms(self, numbers, message):
-        sid = self.env.user.company_id.twilio_account_sid
-        token = self.env.user.company_id.twilio_auth_token
+        client = self.env.user.get_twilio_client()
         from_number = self.env.user.company_id.twilio_number
-        client = Client(sid, token)
-        for number in numbers:
-            client.api.account.messages.create(
-                to=number,
-                from_=from_number,
-                body=message)
+        try:
+            for number in numbers:
+                client.api.account.messages.create(
+                    to=number,
+                    from_=from_number,
+                    body=message)
+        except TwilioRestException as e:
+            raise UserError(e.msg)

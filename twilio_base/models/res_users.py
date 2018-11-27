@@ -16,6 +16,9 @@ except ImportError:
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
+    def get_default_phone(self, sms=False, voice=False, whats=False):
+        return self.env.user.company_id.twilio_number_id
+
     def get_twilio_client(self):
         company = self.company_id
         if not company.twilio_account_sid or not company.twilio_auth_token:

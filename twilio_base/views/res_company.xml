@@ -11,8 +11,9 @@
                     <field name="twilio_auth_token" password="True" />
                     <field name="twilio_api_key" />
                     <field name="twilio_api_secret" password="True" />
-                    <field name="twilio_number" />
+                    <field name="twilio_number_id" />
                     <field name="balance_account" />
+                    <button name="retrieve_phone_numbers" type="object" string="Retrieve Twilio Numbers" />
                 </group>
             </group>
         </field>

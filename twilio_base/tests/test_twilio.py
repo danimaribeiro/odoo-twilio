@@ -50,4 +50,4 @@ class TestTwilioBase(TransactionCase):
         })
         key.unlink()
         mock.return_value.keys.assert_called_with('sid123')
-        mock.return_value.keys.return_value.delete.assert_called()
+        mock.return_value.keys.return_value.delete.assert_called_once_with()

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_twilio_bot_flow_form" model="ir.ui.view">
+        <field name="name">view_twilio_bot_flow_form</field>
+        <field name="model">twilio.bot.flow</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="identifier" />
+                    <field name="model_id" />
+                    <field name="end_flow_action" />
+                </group>
+                <group>
+                    <field name="interaction_ids" nolabel="1" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_twilio_bot_flow" model="ir.actions.act_window">
+        <field name="name">Twilio Bot Flows</field>
+        <field name="res_model">twilio.bot.flow</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_twilio_bot_flow"
+        name="Twilio Bot Flow"
+        action="action_twilio_bot_flow"
+        parent="twilio_base.menu_twilio_configuration"
+        sequence="50"/>
+
+</odoo>

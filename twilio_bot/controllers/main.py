@@ -7,7 +7,7 @@ from odoo.http import request
 _logger = logging.getLogger(__name__)
 
 try:
-    from twilio.twiml.messaging_response import Message, MessagingResponse
+    from twilio.twiml.messaging_response import MessagingResponse
 except ImportError:
     _logger.error('Cannot import twilio library', exc_info=True)
 

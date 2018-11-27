@@ -1,7 +1,7 @@
 # © 2018 Danimar Ribeiro <danimaribeiro@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class TwilioBotFlow(models.Model):
@@ -37,8 +37,15 @@ class TwilioActiveInteraction(models.Model):
 
     def _compute_next_interaction(self):
         for item in self:
-            item.next_interaction_id = self.env['']
+            next = self.env['twilio.bot.flow.interaction'].search(
+                [('bot_flow_id', '=',
+                  item.current_interaction_id.bot_flow_id.id),
+                 ('sequence', '>', item.sequence)],
+                limit=1, order='sequence asc')
+            item.next_interaction_id = next
 
+    partner_id = fields.Many2one('res.partner', string="Partner")
+    from_number = fields.Char(string="From", size=30)
     current_interaction_id = fields.Many2one('twilio.bot.flow.interaction')
     next_interaction_id = fields.Many2one(
         'twilio.bot.flow.interaction', compute='_compute_next_interaction')

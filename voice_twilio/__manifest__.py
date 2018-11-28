@@ -20,4 +20,7 @@
     'data': [
         'views/twilio_assets.xml',
     ],
+    'qweb': [
+        'static/src/xml/dial.xml'
+    ],
 }

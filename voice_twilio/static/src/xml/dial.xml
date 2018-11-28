@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-name="TwilioCallNotification" t-extend="Notification">
+        <t t-jquery=".o_notification_title > t" t-operation="replace">
+            <span  t-attf-class="link2event eid_{{widget.callId}}">
+                <t t-esc="widget.title"/>
+            </span>
+        </t>
+        <t t-jquery=".o_notification_content" t-operation="append">
+            <br/><br/>
+            <button type="button" class="btn btn-success link2answer">
+                <i class="fa fa-phone"></i> Atender
+            </button>
+            <button type="button" class="btn btn-danger link2reject pull-right">Rejeitar</button>
+        </t>
+    </t>
+
+    <t t-name="twilio_base.phone.dial">
+        <div class="col-md-4" style="position: absolute;bottom: 0px;left: 0px; padding:0px;">
+            <div class="dialpad compact">
+                <div class="number">
+                    <input type="text" />
+                </div>
+                <div class="dials">
+                    <ol>
+                        <li class="digits">
+                            <p><strong>1</strong></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>2</strong><sup>abc</sup></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>3</strong><sup>def</sup></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>4</strong><sup>ghi</sup></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>5</strong><sup>jkl</sup></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>6</strong><sup>mno</sup></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>7</strong><sup>pqrs</sup></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>8</strong><sup>tuv</sup></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>9</strong><sup>wxyz</sup></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>*</strong></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>0</strong><sup>+</sup></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong>#</strong></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong><i class="fa fa-refresh"></i></strong> <sup>Clear</sup></p>
+                        </li>
+                        <li class="digits">
+                            <p><strong><i class="fa fa-remove"></i></strong> <sup>Delete</sup></p>
+                        </li>
+                        <li class="digits pad-action">
+                            <p><strong><i class="fa fa-phone"></i></strong> <sup>Call</sup></p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

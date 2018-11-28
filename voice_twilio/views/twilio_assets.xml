@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <template id="bpmn_modeler_assets_frontend" name="bpmn_modeler_assets" inherit_id="web.assets_frontend">
+    <template id="assets_voice_twilio_backend" name="assets_voice_twilio_backend" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <script type="text/javascript"
-                src="//media.twiliocdn.com/sdk/js/client/v1.5/twilio.min.js"></script>
-            <script type="text/javascript"
-                src="/voice_twilio/static/src/js/twilio_app.js"></script>
+            <script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.5/twilio.min.js"></script>
+            <script type="text/javascript" src="/voice_twilio/static/src/js/twilio_app.js"></script>
+            <link rel="stylesheet" href="/voice_twilio/static/src/css/dial.css"/>
         </xpath>
     </template>
 
+    <record id="action_home_page" model="ir.actions.client">
+        <field name="name">Abrir dial</field>
+        <field name="tag">voice_twilio.open_dialer</field>
+    </record>
+
+    <menuitem id="home_page_petstore_menu" parent="contacts.menu_contacts"
+          name="Discar" action="action_home_page"/>
 </odoo>

@@ -1,86 +1,83 @@
-odoo.define('twilio_base', function (require) {
+odoo.define('voice_twilio', function (require) {
     "use strict";
 
-var core = require('web.core');
-var base_bus = require('bus.bus');
-var Dialog = require('web.Dialog');
-var Model = require('web.Model');
-var session = require('web.session');
-var SystrayMenu = require('web.SystrayMenu');
-var Widget = require('web.Widget');
-var WebClient = require('web.WebClient');
-var Notification = require('web.notification').Notification;
+    var core = require('web.core');
+    var base_bus = require('bus.bus');
+    var Dialog = require('web.Dialog');
+    var session = require('web.session');
+    var SystrayMenu = require('web.SystrayMenu');
+    var Widget = require('web.Widget');
+    var WebClient = require('web.WebClient');
+    var Notification = require('web.notification').Notification;
 
-var QWeb = core.qweb;
-var _t = core._t;
+    var QWeb = core.qweb;
+    var _t = core._t;
 
+    var TwilioCallNotification = Notification.extend({
+        template: "TwilioCallNotification",
 
-var TwilioCallNotification = Notification.extend({
-    template: "TwilioCallNotification",
+        init: function(parent, title, text, callId) {
+            this._super(parent, title, text, true);
+            this.callId = callId;
 
-    init: function(parent, title, text, callId) {
-        this._super(parent, title, text, true);
-        this.callId = callId;
-
-        this.events = _.extend(this.events || {}, {
-            'click .link2answer': function() {
-                var self = this;
-                session.rpc("/twilio/token", {}).then(function (data) {
-                    Twilio.Device.setup(data);
-                    Twilio.Device.incoming(function(connection) {
-                        connection.accept();
+            this.events = _.extend(this.events || {}, {
+                'click .link2answer': function() {
+                    var self = this;
+                    session.rpc("/twilio/token", {}).then(function (data) {
+                        Twilio.Device.setup(data);
+                        Twilio.Device.incoming(function(connection) {
+                            connection.accept();
+                        });
+                        Twilio.Device.ready(function (device) {
+                            var params = {
+                                To: 'queue'
+                            };
+                            Twilio.Device.connect(params);
+                            self.destroy(true);
+                        });
                     });
-                    Twilio.Device.ready(function (device) {
-                        var params = {
-                            To: 'queue'
-                        };
-                        Twilio.Device.connect(params);
-                        self.destroy(true);
-                    });
-                });
-            },
+                },
 
-            'click .link2reject': function() {
-                this.destroy(true);
-            },
-        });
-    },
-});
+                'click .link2reject': function() {
+                    this.destroy(true);
+                },
+            });
+        },
+    });
 
-WebClient.include({
-    show_application: function() {
-        this.start_polling_calls();
-        return this._super();
-    },
-    on_logout: function() {
-        var self = this;
-        base_bus.bus.off('notification', this, this.bus_notification);
-        this._super();
-    },
-    start_polling_calls: function() {
-        this.channel_twilio_call = 'notify_twilio_call_' + this.session.uid;
-        base_bus.bus.add_channel(this.channel_twilio_call);
-        base_bus.bus.on('notification', this, this.twilio_call_notification);
-        base_bus.bus.start_polling();
-    },
-    twilio_call_notification: function(notifications) {
-        var self = this;
-        _.each(notifications, function (notification) {
-            var channel = notification[0];
-            var message = notification[1];
-            if (channel == self.channel_twilio_call) {
-                self.on_message_new_call(message);
+    WebClient.include({
+        show_application: function() {
+            this.start_polling_calls();
+            return this._super();
+        },
+        on_logout: function() {
+            var self = this;
+            base_bus.bus.off('notification', this, this.bus_notification);
+            this._super();
+        },
+        start_polling_calls: function() {
+            // this.channel_twilio_call = 'notify_twilio_call_' + this.session.uid;
+            // base_bus.bus.add_channel(this.channel_twilio_call);
+            // base_bus.bus.on('notification', this, this.twilio_call_notification);
+            // base_bus.bus.start_polling();
+        },
+        twilio_call_notification: function(notifications) {
+            var self = this;
+            _.each(notifications, function (notification) {
+                var channel = notification[0];
+                var message = notification[1];
+                if (channel == self.channel_twilio_call) {
+                    self.on_message_new_call(message);
+                }
+            });
+        },
+        on_message_new_call: function(message){
+            if(this.notification_manager) {
+                var notification = new TwilioCallNotification(this.notification_manager, message.title, message.message, message.call_id);
+                this.notification_manager.display(notification);
             }
-        });
-    },
-    on_message_new_call: function(message){
-        if(this.notification_manager) {
-            var notification = new TwilioCallNotification(this.notification_manager, message.title, message.message, message.call_id);
-            this.notification_manager.display(notification);
         }
-    }
-});
-
+    });
 
     var OpenDialer = Widget.extend({
         template: 'twilio_base.phone.dial',
@@ -114,6 +111,5 @@ WebClient.include({
             Twilio.Device.disconnectAll();
         },
     });
-
-    core.action_registry.add('twilio_base.open_dialer', OpenDialer);
+    core.action_registry.add('voice_twilio.open_dialer', OpenDialer);
 });

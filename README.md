@@ -6,7 +6,7 @@ Twilio Apps
 |
 <b><a href="#features">Features</a></b>
 |
-<b><a href="#roadmap">Roadmap</a></b>
+<b><a href="#documentation">Documentation</a></b>
 |
 <b><a href="#installation">Installation</a></b>
 |
@@ -22,6 +22,7 @@ Twilio Apps
 [![Build Status](https://travis-ci.org/danimaribeiro/odoo-twilio.svg?branch=11.0)](https://travis-ci.org/danimaribeiro/odoo-twilio)
 [![Coverage Status](https://coveralls.io/repos/github/danimaribeiro/odoo-twilio/badge.svg?branch=11.0)](https://coveralls.io/github/danimaribeiro/odoo-twilio?branch=11.0)
 [![Licence](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)
+[![Docs](https://readthedocs.org/projects/odoo-twilio/badge/?style=flat)](https://odoo-twilio.readthedocs.io/)
 
 
 ## Introduction
@@ -37,9 +38,10 @@ This repository contains modules to use Twilio capabilities within Odoo
 
 <p align="right"><a href="#top">:arrow_up:</a></p>
 
-## Roadmap
+## Documentation
 
-TODO
+Checkout the docs for more information: 
+[![Docs](https://readthedocs.org/projects/odoo-twilio/badge/?style=flat)](https://odoo-twilio.readthedocs.io/)
 
 <p align="right"><a href="#top">:arrow_up:</a></p>
 

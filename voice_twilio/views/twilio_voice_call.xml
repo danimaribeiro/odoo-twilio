@@ -24,6 +24,21 @@
         </field>
     </record>
 
+    <record id="view_twilio_voice_call_tree" model="ir.ui.view">
+        <field name="name">view_twilio_voice_call_tree</field>
+        <field name="model">twilio.voice.call</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="calling_date" />
+                <field name="name" />
+                <field name="state"/>
+                <field name="from_number"/>
+                <field name="to_number"/>
+                <field name="type" />
+            </tree>
+        </field>
+    </record>
+
     <record id="action_twilio_voice_call" model="ir.actions.act_window">
         <field name="name">Voice Calls</field>
         <field name="res_model">twilio.voice.call</field>

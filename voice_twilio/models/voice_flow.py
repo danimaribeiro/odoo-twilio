@@ -1,8 +1,15 @@
 # © 2018 Danimar Ribeiro <danimaribeiro@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-
+import logging
 from odoo import fields, models
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from twilio.twiml.voice_response import Dial, Gather, VoiceResponse
+except ImportError:
+    _logger.error('Cannot import twilio library', exc_info=True)
 
 
 class TwilioVoiceFlow(models.Model):
@@ -41,3 +48,68 @@ class TwilioVoiceFlow(models.Model):
 
     filter_key = fields.Char(string="Filter Key")
     filter_value = fields.Char(string="Filter Value")
+
+    def next_flow(self, sequence):
+        flow = self.search(
+            [('sequence', '>', sequence)], limit=1, order='sequence asc')
+        return flow
+
+    def _get_dial_to(self):
+        if self.to_partner_id and self.to_partner_id.twilio_client:
+            return [self.to_partner_id.twilio_client]
+        elif self.to_mail_channel_id:
+            partners = self.to_mail_channel_id.channel_last_seen_partner_ids
+            return [x.twilio_client for x in partners if x.twilio_client]
+        return None
+
+    def _generate_say(self, response):
+        if self.say_message and len(self.say_message) > 0:
+            response.say(self.say_message, voice="alice", language="pt-BR")
+
+    def _generate_gather(self, response):
+        gather = Gather()
+        self._generate_say(gather)
+
+        if self.gather_possible_values:
+            values = [x.strip() for x in
+                      self.gather_possible_values.split('\n')]
+            if ";" in values[0]:
+                gather.input = 'dtmf speech'
+                gather.speechTimeout = 'auto'
+            elif values[0].isdigit():
+                gather.input = 'dtmf'
+            else:
+                gather.input = 'speech'
+                gather.speechTimeout = 'auto'
+
+        response.append(gather)
+
+    def _generate_dial(self, response):
+        self._generate_say(response)
+        dial_to = self._get_dial_to()
+        if len(dial_to) > 0:
+            dial = Dial()
+            for item in dial_to[:10]:
+                dial.client(item)
+            response.append(dial)
+        else:
+            response.say('Nobody is available to answer your call!')
+
+    def generate_twiml(self):
+        response = VoiceResponse()
+        if self.flow_type == 'say':
+            self._generate_say(response)
+        elif self.flow_type == 'gather':
+            self._generate_gather(response)
+        elif self.flow_type == 'connect':
+            self._generate_dial(response)
+
+        base_url = self.env['ir.config_parameter'].sudo().get_param(
+            'twilio.base.url')
+        if not base_url:
+            base_url = self.env['ir.config_parameter'].sudo().get_param(
+                'web.base.url')
+        response.say('Nenhuma pessoa para atender', voice='alice', language='pt-BR')
+        response.redirect(base_url + '/twilio/voice')
+        print(str(response))
+        return response

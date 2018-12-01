@@ -8,6 +8,7 @@ from odoo import fields, models
 class TwilioVoiceCall(models.Model):
     _name = 'twilio.voice.call'
     _description = 'Voice Call from Twilio'
+    _order = 'calling_date desc'
 
     name = fields.Char(string="Name", size=50, required=True)
     sid = fields.Char(string="Unique Identifier", size=40, readonly=True)
@@ -28,7 +29,7 @@ class TwilioVoiceCall(models.Model):
                               ('talking', 'Talking'),
                               ('completed', 'Completed')])
     call_duration = fields.Integer(string="Duration")
-    voice_flow_sequence = fields.Integer(default=0)
+    voice_flow_sequence = fields.Integer(default=-1)
     last_gather_key = fields.Char()
     last_gather_value = fields.Char()
 

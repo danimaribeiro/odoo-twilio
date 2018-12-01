@@ -14,7 +14,7 @@ except ImportError:
 
 class TwilioBotController(http.Controller):
 
-    @http.route('/trustbot/new-sms', type='http', auth="public",
+    @http.route('/twilio/bot', type='http', auth="public",
                 cors="*", csrf=False)
     def call_ended(self, **post):
         flow = request.env['twilio.bot.flow'].sudo().search([], limit=1)

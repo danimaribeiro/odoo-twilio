@@ -15,10 +15,14 @@
     'depends': [
         'twilio_base',
         'phone_validation',
-        'mail'
+        'mail',
+        'contacts',
     ],
     'data': [
+        'security/ir.model.access.csv',
         'views/twilio_assets.xml',
+        'views/twilio_voice_call.xml',
+        'views/voice_flow.xml',
     ],
     'qweb': [
         'static/src/xml/dial.xml'

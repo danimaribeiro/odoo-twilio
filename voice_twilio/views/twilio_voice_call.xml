@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_twilio_voice_call_form" model="ir.ui.view">
+        <field name="name">view_twilio_voice_call_form</field>
+        <field name="model">twilio.voice.call</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="state"/>
+                    <field name="calling_date"/>
+                    <field name="call_duration"/>
+                    <field name="sid"/>
+                    <field name="from_number" />
+                    <field name="from_city" />
+                    <field name="from_state" />
+                    <field name="from_country" />
+                    <field name="type" />
+                    <field name="to_number" />
+                    <field name="to_city" />
+                    <field name="to_state" />
+                    <field name="to_country" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_twilio_voice_call" model="ir.actions.act_window">
+        <field name="name">Voice Calls</field>
+        <field name="res_model">twilio.voice.call</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_twilio_voice_call"
+        name="Voice Calls"
+        action="action_twilio_voice_call"
+        parent="twilio_base.menu_twilio"
+        sequence="30"/>
+
+
+</odoo>

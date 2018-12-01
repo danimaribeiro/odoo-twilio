@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_twilio_voice_flow_form" model="ir.ui.view">
+        <field name="name">view_twilio_voice_flow_form</field>
+        <field name="model">twilio.voice.flow</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="flow_type"/>
+                        <field name="say_message"/>
+                        <field name="record_call" attrs="{'invisible': [('flow_type', '!=', 'connect')]}" />
+                        <field name="gather_key" attrs="{'invisible': [('flow_type', '!=', 'gather')]}"/>
+                        <field name="gather_possible_values" attrs="{'invisible': [('flow_type', '!=', 'gather')]}" />
+                        <field name="to_partner_id" attrs="{'invisible': [('flow_type', '!=', 'connect')]}" />
+                        <field name="to_mail_channel_id" attrs="{'invisible': [('flow_type', '!=', 'connect')]}" />
+                    </group>
+                    <group string="Filter Flow">
+                        <field name="filter_key"/>
+                        <field name="filter_value"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_twilio_voice_flow_tree" model="ir.ui.view">
+        <field name="name">view_twilio_voice_flow_tree</field>
+        <field name="model">twilio.voice.flow</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="flow_type"/>
+                <field name="to_partner_id" />
+                <field name="to_mail_channel_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_twilio_voice_flow" model="ir.actions.act_window">
+        <field name="name">Voice Flow</field>
+        <field name="res_model">twilio.voice.flow</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_twilio_voice_flow"
+        name="Voice Flows"
+        action="action_twilio_voice_flow"
+        parent="twilio_base.menu_twilio_configuration"
+        sequence="25"/>
+
+
+</odoo>

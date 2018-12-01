@@ -54,6 +54,11 @@ class TwilioVoiceFlow(models.Model):
             [('sequence', '>', sequence)], limit=1, order='sequence asc')
         return flow
 
+    def current_flow(self, sequence):
+        flow = self.search(
+            [('sequence', '=', sequence)], limit=1)
+        return flow
+
     def _get_dial_to(self):
         if self.to_partner_id and self.to_partner_id.twilio_client:
             return [self.to_partner_id.twilio_client]
@@ -67,21 +72,20 @@ class TwilioVoiceFlow(models.Model):
             response.say(self.say_message, voice="alice", language="pt-BR")
 
     def _generate_gather(self, response):
-        gather = Gather()
-        self._generate_say(gather)
-
+        input = ''
         if self.gather_possible_values:
             values = [x.strip() for x in
                       self.gather_possible_values.split('\n')]
             if ";" in values[0]:
-                gather.input = 'dtmf speech'
-                gather.speechTimeout = 'auto'
+                input = 'dtmf speech'
             elif values[0].isdigit():
-                gather.input = 'dtmf'
+                input = 'dtmf'
             else:
-                gather.input = 'speech'
-                gather.speechTimeout = 'auto'
+                input = 'speech'
 
+        gather = Gather(timeout=10, speechTimeout='auto',
+                        input=input, language='pt-BR')
+        self._generate_say(gather)
         response.append(gather)
 
     def _generate_dial(self, response):
@@ -109,7 +113,14 @@ class TwilioVoiceFlow(models.Model):
         if not base_url:
             base_url = self.env['ir.config_parameter'].sudo().get_param(
                 'web.base.url')
-        response.say('Nenhuma pessoa para atender', voice='alice', language='pt-BR')
         response.redirect(base_url + '/twilio/voice')
-        print(str(response))
         return response
+
+    def match_response(self, result):
+        if self.gather_possible_values:
+            values = [x.strip() for x in
+                      self.gather_possible_values.split('\n')]
+            for value in values:
+                if result in value.split(';'):
+                    return True
+        return False

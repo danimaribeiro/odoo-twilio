@@ -5,4 +5,3 @@
 from . import twilio_voice_call
 from . import voice_flow
 from . import res_partner
-from . import mail_channel

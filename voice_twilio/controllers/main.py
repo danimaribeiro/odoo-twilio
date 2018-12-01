@@ -46,6 +46,14 @@ class TwilioController(http.Controller):
 
     def call_in_progress(self, voice_call_id, vals):
         flow_obj = request.env['twilio.voice.flow'].sudo()
+
+        if "Digits" in vals or "SpeechResult" in vals:
+            result = vals.get('Digits') or vals.get('SpeechResult')
+            flow = flow_obj.current_flow(voice_call_id.voice_flow_sequence)
+            match = flow.match_response(result)
+            if not match:
+                return str(flow.generate_twiml())
+
         flow = flow_obj.next_flow(voice_call_id.voice_flow_sequence)
         if not flow:
             resp = VoiceResponse()
@@ -58,7 +66,6 @@ class TwilioController(http.Controller):
     @http.route('/twilio/voice', type='http', auth="public",
                 cors="*", csrf=False)
     def twilio_voice_request(self, **vals):
-        print(vals)
         voice_obj = request.env['twilio.voice.call'].sudo()
         voice_call_id = voice_obj.register_new_call(vals)
         call_status = vals['CallStatus']

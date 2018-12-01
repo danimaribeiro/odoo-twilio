@@ -18,21 +18,6 @@ except ImportError:
 
 class TwilioController(http.Controller):
 
-    # @http.route('/twilio/on-hold', type='http', auth="public",
-    #             cors="*", csrf=False)
-    # def call_in_hold(self, **post):
-    #     request.env['phone.call'].sudo().update_call_status(**post)
-    #
-    #     response = twiml.Response()
-    #     if post["Direction"] == 'inbound' and \
-    #        post["CallStatus"] == 'in-progress':
-    #         if int(post['QueueTime']) > 60:
-    #             response.hangup()
-    #             return str(response)
-    #     response.play("http://com.twilio.sounds.music.s3.amazonaws.com/" +
-    #                   "MARKOVICHAMP-Borghestral.mp3")
-    #     return str(response)
-
     def new_incoming_call(self, voice_call_id, vals):
         flow_obj = request.env['twilio.voice.flow'].sudo()
         flow = flow_obj.next_flow(voice_call_id.voice_flow_sequence)
@@ -79,26 +64,6 @@ class TwilioController(http.Controller):
             resp = VoiceResponse()
             resp.hangup()
             return str(resp)
-
-        # if "client" not in post["From"]:
-        #     resp.say("Estamos transferindo sua chamada, por favor aguarde",
-        #              voice="alice", language="pt-BR")
-        #     resp.enqueue('trustcode',
-        #                  waitUrl='http://%s/twilio/on-hold' % url_base)
-        #     return str(resp)
-        #
-        # else:
-        #     if post["To"] != 'queue':
-        #         with resp.dial(callerId=twilio_number) as dial:
-        #             dial.number(post['To'])
-        #         return str(resp)
-        #     else:
-        #         with resp.dial(callerId=twilio_number,
-        #                        record='record-from-answer') as dial:
-        #             dial.queue(
-        #                 'trustcode',
-        #                 url="http://%s/twilio/call-connected" % url_base)
-        #         return str(resp)
 
     @http.route('/twilio/token', type='json')
     def generate_token(self):
